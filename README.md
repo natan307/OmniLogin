@@ -3,6 +3,8 @@
   <a href="https://discord.com/users/1211125229770903654"><img src="https://img.shields.io/badge/By%20Natan307-3020FF?style=for-the-badge&logo=star&logoColor=white" alt="Natan307"></a>
 </p>
 
+**⚠️ This plugin will only be released or published in the next few days.**
+
 # OmniLogin
 
 Microsoft and Ely.by login for **offline-mode servers**, with name protection and a built-in password login.
