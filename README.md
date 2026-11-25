@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://ko-fi.com/natanezra"><img src="https://img.shields.io/badge/Support%20me%20on-Ko--fi-FF5E5B?style=for-the-badge&logo=ko-fi&logoColor=white" alt="Support me on Ko-fi"></a>
-  <a href="https://ko-fi.com/natanezra"><img src="https://img.shields.io/badge/Support%20me%20on-Ko--fi-FF5E5B?style=for-the-badge&logo=ko-fi&logoColor=white" alt="Natan307"></a>
+  <a href="https://ko-fi.com/natanezra"><img src="https://img.shields.io/badge/By%20me%20Natan307-FF5E5B?style=for-the-badge&logo=ko-fi&logoColor=white" alt="Natan307"></a>
 </p>
 # OmniLogin
 
