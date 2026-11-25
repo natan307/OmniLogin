@@ -1,0 +1,35 @@
+name: OmniLogin
+version: '${project.version}'
+main: dev.omnilogin.OmniLoginPlugin
+api-version: '1.21'
+folia-supported: true
+authors: [Natan307]
+website: https://github.com/natan307
+description: ${project.description}
+
+commands:
+  omnilogin:
+    description: OmniLogin admin command
+    usage: /<command> <status|check <name>|about>
+    permission: omnilogin.admin
+  register:
+    description: Register your account
+    aliases: [reg]
+    usage: /<command> <password> <password>
+  login:
+    description: Log in with your password
+    aliases: [l]
+    usage: /<command> <password>
+  changepassword:
+    description: Change your password
+    aliases: [changepass]
+    usage: /<command> <old password> <new password>
+  omniauth:
+    description: Manage password accounts
+    usage: /<command> <unregister|setpassword> <name> [password]
+    permission: omnilogin.admin
+
+permissions:
+  omnilogin.admin:
+    description: Use the OmniLogin admin commands
+    default: op

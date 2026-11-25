@@ -1,0 +1,105 @@
+# ======================================================================================================
+#  OmniLogin - config.yml   (MIT License, by Natan307)
+#  Messages support '&' color codes and \n for a new line.
+#
+#  Requirement (standalone mode): server.properties -> online-mode=false
+#  Nothing else is needed: no ProtocolLib, no proxy, no extra port, nothing in spigot.yml.
+# ======================================================================================================
+
+# standalone = OmniLogin checks every connection itself (normal single server).
+# backend    = this server sits behind Velocity/BungeeCord running OmniLogin; the proxy does the checks and this
+#              server only runs the password login. Set 'login.use-premium-uuid: true' in the proxy's config.
+mode: standalone
+
+login:
+  # Let players without a Microsoft/Ely.by account join, as long as their name is free.
+  allow-cracked: true
+  # If the name check fails (API down), refuse the cracked player instead of letting them in.
+  deny-when-lookup-fails: true
+  # Names that may always join as cracked (test bots, etc.).
+  bypass-names: []
+  # false = verified players keep the same offline UUID as before (their old data keeps working).
+  # true  = verified players use their real Microsoft/Ely.by UUID. Needs 'settings.bungeecord: true' in spigot.yml
+  #         (just a server setting, not a proxy); it also lets OmniLogin pass the real skin data to the server.
+  use-premium-uuid: false
+  # Refuse any connection OmniLogin did not check. Leave this on.
+  enforce-identity: true
+  # A login step (name check, session check) that takes longer than this ends with a clear kick message
+  # instead of the client timing out.
+  step-timeout-ms: 15000
+
+# Bedrock players through Geyser / Floodgate.
+geyser:
+  # auto = switch on when Geyser or Floodgate is installed; true / false to force it.
+  # With Geyser, spigot.yml must have 'settings.bungeecord: false'. Floodgate players skip the password login
+  # (Floodgate already verified them with Xbox). Without Floodgate, Bedrock players are cracked players
+  # (/register and /login), and a Bedrock name that equals a registered Java name is refused. Floodgate's ".Name"
+  # prefix avoids that.
+  support: auto
+  # Troubleshooting only: if Bedrock players are kicked with "connection could not be verified", set this to true.
+  allow-unregistered-loopback: false
+
+upstream:
+  microsoft-session: https://sessionserver.mojang.com/session/minecraft
+  elyby-session: https://authserver.ely.by/session
+  microsoft-profile-api: https://api.mojang.com/users/profiles/minecraft/
+  elyby-profile-api: https://authserver.ely.by/api/users/profiles/minecraft/
+  timeout-ms: 4000
+  cache:
+    registered-seconds: 1800
+    free-seconds: 300
+
+# ------------------------------------------------------------------------------------------------------
+# Password login for cracked players. Players verified through Microsoft or Ely.by skip it.
+# ------------------------------------------------------------------------------------------------------
+auth:
+  # true = cracked players must /register and /login, false = open access (no passwords)
+  enabled: true
+  # dialog = a Minecraft dialog window with input fields (Paper 1.21.7+, clients 1.21.6+); older servers/clients
+  #          fall back to the chat commands. chat = chat commands only.
+  # Note: the text fields of Minecraft dialogs show what is typed (there is no hidden-input mode).
+  ui: dialog
+  # sqlite (a local file) or mysql (also MariaDB)
+  storage: sqlite
+  sqlite-file: omnilogin.db
+  mysql:
+    host: localhost
+    port: 3306
+    database: omnilogin
+    username: root
+    password: ''
+    use-ssl: false
+  min-password-length: 6
+  # Wrong passwords before the player is kicked
+  max-login-attempts: 5
+  # Seconds a player has to log in before being kicked
+  login-timeout-seconds: 60
+  # Players reconnecting from the same IP within this many minutes are logged in again automatically (0 = off)
+  session-minutes: 30
+  # Commands that work before logging in
+  allowed-commands: [login, l, register, reg]
+  # Optional: override any message (&-codes). Keys: register-prompt, login-prompt, reminder, session-resumed,
+  # registered, logged-in, already-registered, not-registered, already-logged-in, must-login, wrong-password,
+  # too-many-attempts, timeout, password-mismatch, password-too-short, password-too-long, password-changed,
+  # usage-register, usage-login, usage-changepassword, internal-error, and for the dialogs: dialog-title-register,
+  # dialog-title-login, dialog-hint-register, dialog-hint-login, dialog-label-password, dialog-label-confirm,
+  # dialog-button-register, dialog-button-login
+  messages: {}
+
+messages:
+  reserved-name: "&cThis name is registered as an official Microsoft/Ely.by account.\n&7Please use another name!"
+  cracked-disabled: "&cCracked (unverified) players are not allowed on this server.\n&7Please log in with a Microsoft or Ely.by account."
+  lookup-failed: "&cCould not verify your name right now.\n&7Please try again in a moment."
+  invalid-name: "&cInvalid username."
+  old-client: "&cPlease use Minecraft 1.19.3 or newer to log in with a premium account."
+  unverified: "&cYour connection could not be verified. Please reconnect."
+
+# Log every step of every login (for troubleshooting). Turn it off again afterwards.
+debug: false
+
+# Anonymous usage statistics (https://bstats.org). You can also disable them for every plugin in plugins/bStats/config.yml
+bstats: true
+
+# If OmniLogin cannot protect an online-mode=false server (unsupported server version), stop the
+# server instead of leaving it open to name spoofing.
+shutdown-if-unsafe: true

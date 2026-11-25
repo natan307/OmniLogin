@@ -1,0 +1,5 @@
+name: OmniLogin
+version: 1.0.0
+main: dev.omnilogin.bungee.OmniLoginBungee
+author: Natan307
+description: Microsoft login and name protection for cracked players on BungeeCord.

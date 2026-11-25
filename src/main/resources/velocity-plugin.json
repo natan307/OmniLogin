@@ -1,0 +1,9 @@
+{
+  "id": "omnilogin",
+  "name": "OmniLogin",
+  "version": "1.0.0",
+  "description": "Microsoft and Ely.by login with name protection for cracked players.",
+  "authors": ["Natan307"],
+  "dependencies": [],
+  "main": "dev.omnilogin.velocity.OmniLoginVelocity"
+}
